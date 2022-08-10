@@ -17,9 +17,13 @@ def search_main_dirs(tags):
     return dirs.main[main_dir_tag]
 
 def search_sub_dirs(tags):
-    sub_dir_tags = filter(lambda tag: tag in dirs.sub.keys(), tags)
-    sub_dir_tag = list(sub_dir_tags)[0]
-    return dirs.sub[sub_dir_tag]
+    sub_dir_tags = list(filter(lambda tag: tag in dirs.sub.keys(), tags))
+    sub_dir_paths = []
+
+    for tag in sub_dir_tags:
+        sub_dir_paths.append(dirs.sub[tag])
+
+    return sub_dir_paths
 
 def get_file_tags(file):
     try:
@@ -41,9 +45,10 @@ def move_file(file):
     try:
         if tags:
             main_dir = search_main_dirs(tags)
-            sub_dir = search_sub_dirs(tags)
+            sub_dirs = search_sub_dirs(tags)
 
-            move(file, f'{current_dir}{main_dir}{sub_dir}')
+            sub_dir_str = ''.join(sub_dirs)
+            move(file, f'{current_dir}{main_dir}{sub_dir_str}')
     except:
         pass
 
