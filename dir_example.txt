@@ -1,8 +1,12 @@
 source_dir = Example dir to track
 target_dir_base = Base dir to move files to
 
-tags_folders = { 
-    uni:      University dir,
-    harvard:  Harvard dir,
-    work:     Work dir,
+main = {
+    uni: University dir path
+    work: Work dir path
+}
+
+sub = {
+    math: Math dir path,
+    eng: English dir path
 }

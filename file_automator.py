@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 from shutil import move
 import osxmetadata
@@ -8,6 +10,16 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 import dirs
+
+def search_main_dirs(tags):
+    main_dir_tags = filter(lambda tag: tag in dirs.main.keys(), tags)
+    main_dir_tag = list(main_dir_tags)[0]
+    return dirs.main[main_dir_tag]
+
+def search_sub_dirs(tags):
+    sub_dir_tags = filter(lambda tag: tag in dirs.sub.keys(), tags)
+    sub_dir_tag = list(sub_dir_tags)[0]
+    return dirs.sub[sub_dir_tag]
 
 def get_file_tags(file):
     try:
@@ -28,11 +40,10 @@ def move_file(file):
 
     try:
         if tags:
-            for tag in tags:
-                if tag in dirs.tags_folders:
-                    current_dir += dirs.tags_folders[tag]
+            main_dir = search_main_dirs(tags)
+            sub_dir = search_sub_dirs(tags)
 
-            move(file, f'{current_dir}')
+            move(file, f'{current_dir}{main_dir}{sub_dir}')
     except:
         pass
 
