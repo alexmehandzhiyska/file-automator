@@ -13,17 +13,24 @@ import dirs
 
 def search_main_dirs(tags):
     main_dir_tags = filter(lambda tag: tag in dirs.main.keys(), tags)
-    main_dir_tag = list(main_dir_tags)[0]
-    return dirs.main[main_dir_tag]
+
+    try:
+        main_dir_tag = list(main_dir_tags)[0]
+        return dirs.main[main_dir_tag]
+    except:
+        return ''
 
 def search_sub_dirs(tags):
     sub_dir_tags = list(filter(lambda tag: tag in dirs.sub.keys(), tags))
     sub_dir_paths = []
 
-    for tag in sub_dir_tags:
-        sub_dir_paths.append(dirs.sub[tag])
+    try:
+        for tag in sub_dir_tags:
+            sub_dir_paths.append(dirs.sub[tag])
 
-    return sub_dir_paths
+        return sub_dir_paths
+    except:
+        return []
 
 def get_file_tags(file):
     try:
